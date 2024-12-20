@@ -44,7 +44,7 @@ class SmsIr
         $result = Http::withHeaders([
             'Content-Type: application/json',
             'Accept: text/plain',
-            'X-API-KEY'=>$this->config->get('sms.smsir.api-key')
+            'x-api-key'=>$this->config->get('sms.smsir.api-key')
         ])->post($url, $postData);
         return $result;
     }
