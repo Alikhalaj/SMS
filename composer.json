@@ -1,0 +1,28 @@
+{
+    "name": "alikhalaj/sms",
+    "description": "this package building for sms system and login register",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Leenset\\Sms\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Leenset\\Sms\\SmsServiceProvider8"
+            ],
+            "aliases": {
+                "Debugbar": "Leenset\\Sms\\Sms"
+            }
+        }
+    },
+    "authors": [
+        {
+            "name": "alikhalaj",
+            "email": "akh30002@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev":{}
+}
