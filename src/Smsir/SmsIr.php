@@ -59,7 +59,7 @@ class SmsIr
             "mobiles" => [$mobilenumber],
             "lineNumber" => $this->config->get('sms.smsir.line-number'),
         ];
-      
+
             $url = $this->APIURL . $this->getAPIMessageSendUrl();
             $message = $this->execute($postData, $url);
             return $message;
@@ -74,7 +74,7 @@ class SmsIr
     public function OTP(string $code ,  string $mobilenumber ) {
         $postData =[
             "mobile" => $mobilenumber,
-            "templateId" => 100000,
+            "templateId" => 424974,
             "parameters" => [
                 [
                     "name" => "Code",
