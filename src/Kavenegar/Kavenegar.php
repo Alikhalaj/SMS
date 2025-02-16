@@ -10,11 +10,13 @@ class Kavenegar
     public $APIKey;
     public $SecretKey;
     public $APIURL;
+    public $NUMBER;
     function setConfig($config)
     {
         $this->config = $config;
         $this->APIKey = $this->config->get('sms.kavenegar.api-key');
         $this->APIURL = $this->config->get('sms.kavenegar.api-url');
+        $this->NUMBER = $this->config->get('sms.kavenegar.number');
     }
     public function verificationCode($Code, $MobileNumber)
     {
@@ -52,13 +54,9 @@ class Kavenegar
      */
     public function send(string $message, string $mobilenumber)
     {
-        $postData = [
-            "messageTexts" => [$message],
-            "mobiles" => [$mobilenumber],
-            "lineNumber" => $this->config->get('sms.kavenegar.number'),
-        ];
+        $postData = null;
 
-        $url = $this->APIURL . $this->getAPIMessageSendUrl() . '?receptor= '.$mobilenumber.'&sender=2000500666&message='.$message;
+        $url = $this->APIURL . $this->getAPIMessageSendUrl() . '?receptor= '.$mobilenumber.'&sender='.$this->NUMBER.'&message='.$message;
         $message = $this->execute($postData, $url);
         return $message;
         $object = json_decode($message);
@@ -82,6 +80,38 @@ class Kavenegar
         return $message;
     }
 
+
+    public function VerifyLookup(string $mobilenumber, string $template, string ...$tokens)
+    {
+        $postData = [
+            "receptor" => $mobilenumber,
+            "template" => $template
+        ];
+
+        $paramToken = '';
+
+        $index = 1;
+        foreach ($tokens as $token){
+            if ($index == 1){
+                $paramToken .= "&token=" . $token;
+                $postData['token'] = $token;
+            }
+            else{
+                $paramToken .= "&token$index=" . $token;
+                $postData['token'.$index] = $token;
+            }
+
+            $index++;
+        }
+
+        $url = $this->APIURL . $this->sendOTPUrl() . '?receptor=' . $mobilenumber . '&template=' . $template . $paramToken ;
+
+        $message = $this->execute($postData, $url);
+
+        return $message;
+    }
+
+
     protected function getAPIMessageSendUrl()
     {
         return $this->APIKey . "/sms/send.json";
@@ -91,3 +121,4 @@ class Kavenegar
         return $this->APIKey . "/verify/lookup.json";
     }
 }
+
