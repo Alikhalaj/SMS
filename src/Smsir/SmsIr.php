@@ -19,34 +19,45 @@ class SmsIr
     }
     public function verificationCode($Code, $MobileNumber)
     {
-        $token = $this->getToken();
-        if ($token != false) {
-            $postData = array(
-                'Code' => $Code,
-                'MobileNumber' => $MobileNumber,
-            );
-
-            $url = $this->APIURL . $this->getAPIVerificationCodeUrl();
-            $VerificationCode = $this->execute($postData, $url, $token);
-            $object = json_decode($VerificationCode);
-            if (is_object($object)) {
-                $result = $object->Message;
-            } else {
-                $result = false;
-            }
-        } else {
-            $result = false;
-        }
-        return $result;
+        return $this->OTP($Code, $MobileNumber);
     }
     public function execute($postData, $url, $token=null)
     {
-        $result = Http::withHeaders([
-            'Content-Type: application/json',
-            'Accept: text/plain',
-            'x-api-key'=>$this->config->get('sms.smsir.api-key')
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Accept' => 'text/plain',
+        ];
+        
+        if ($token) {
+            $headers['Authorization'] = 'Bearer ' . $token;
+        } else {
+            $headers['x-api-key'] = $this->APIKey;
+        }
+        
+        $result = Http::withHeaders($headers)->post($url, $postData);
+        return $result->body();
+    }
+    
+    protected function getToken()
+    {
+        $postData = [
+            'UserApiKey' => $this->APIKey,
+            'SecretKey' => $this->SecretKey,
+        ];
+        
+        $url = $this->APIURL . $this->getApiTokenUrl();
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'text/plain',
         ])->post($url, $postData);
-        return $result;
+        
+        $result = json_decode($response->body());
+        
+        if (isset($result->IsSuccessful) && $result->IsSuccessful) {
+            return $result->TokenKey;
+        }
+        
+        return false;
     }
     /**
      * @param string $message text is send to user
@@ -54,27 +65,38 @@ class SmsIr
      */
     public function send(string $message, string $mobilenumber)
     {
+        $token = $this->getToken();
+        if (!$token) {
+            return false;
+        }
+        
         $postData = [
             "messageTexts" => [$message],
             "mobiles" => [$mobilenumber],
             "lineNumber" => $this->config->get('sms.smsir.line-number'),
         ];
 
-            $url = $this->APIURL . $this->getAPIMessageSendUrl();
-            $message = $this->execute($postData, $url);
-            return $message;
-            $object = json_decode($message);
-            if (is_object($object)) {
-                $result = $object->IsSuccessful;
-            } else {
-                $result = false;
-            }
-        return $result;
+        $url = $this->APIURL . $this->getAPIMessageSendUrl();
+        $response = $this->execute($postData, $url, $token);
+        $object = json_decode($response);
+        
+        if (is_object($object) && isset($object->IsSuccessful)) {
+            return $object->IsSuccessful;
+        }
+        
+        return false;
     }
-    public function OTP(string $code ,  string $mobilenumber ) {
-        $postData =[
+    public function OTP(string $code, string $mobilenumber, int $templateId = null) {
+        $token = $this->getToken();
+        if (!$token) {
+            return false;
+        }
+        
+        $templateId = $templateId ?? $this->config->get('sms.smsir.template-id', 424974);
+        
+        $postData = [
             "mobile" => $mobilenumber,
-            "templateId" => 424974,
+            "templateId" => $templateId,
             "parameters" => [
                 [
                     "name" => "Code",
@@ -83,8 +105,14 @@ class SmsIr
             ]
         ];
         $url = $this->APIURL . $this->sendOTPUrl();
-        $message = $this->execute($postData, $url);
-        return $message;
+        $response = $this->execute($postData, $url, $token);
+        $object = json_decode($response);
+        
+        if (is_object($object) && isset($object->IsSuccessful)) {
+            return $object->IsSuccessful;
+        }
+        
+        return false;
     }
     protected function getApiTokenUrl()
     {

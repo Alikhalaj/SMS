@@ -16,38 +16,45 @@ class SmsResolver
     private $classes = [
         'smsir' => '\Smsir\SmsIr',
         'rayansms' => '\Rayansms\RayanSms',
-        'Kavenegar' => '\Kavenegar\Kavenegar'
+        'kavenegar' => '\Kavenegar\Kavenegar'
     ];
+    
     public function __construct($config = null, $driver = null)
     {
-        $this->config = app('config');
-        if (!is_null($driver)) $this->make($driver);
+        $this->config = $config ?? app('config');
+        if (!is_null($driver)) {
+            $this->make($driver);
+        } else {
+            $defaultDriver = $this->config->get('sms.default', 'smsir');
+            $this->make($defaultDriver);
+        }
     }
 
-    public function make($driver = 'smsir')
+    public function make($driver = null)
     {
-        foreach ($this->classes as $key => $class) {
-            $class = __NAMESPACE__ .$class ;
-            if ($this->check($driver = $key)) {
-                $driver = new $class;
-                $this->driver = $driver;
-            }
-        }    
-        $this->driver->setConfig($this->config); // injects config
+        $driver = $driver ?? $this->config->get('sms.default', 'smsir');
+        
+        if (!isset($this->classes[$driver])) {
+            throw new PortNotFoundException("درگاه SMS با نام '{$driver}' یافت نشد.");
+        }
+        
+        $class = __NAMESPACE__ . $this->classes[$driver];
+        
+        if (!class_exists($class)) {
+            throw new PortNotFoundException("کلاس درگاه SMS '{$class}' یافت نشد.");
+        }
+        
+        $this->driver = new $class;
+        $this->driver->setConfig($this->config);
+        
         return $this;
     }
 
     public function __call($name, $arguments)
     {
-        return call_user_func_array([$this->driver, $name], $arguments);
-    }
-
-    private function check(string $driver)
-    {
-        if ($this->config->get('sms.default') == $driver) {
-            if (strlen($this->config->get('sms.default')) != 0) {
-                return true;
-            }
+        if (!$this->driver) {
+            throw new \RuntimeException('هیچ درگاه SMS انتخاب نشده است. ابتدا متد make() را فراخوانی کنید.');
         }
+        return call_user_func_array([$this->driver, $name], $arguments);
     }
 }

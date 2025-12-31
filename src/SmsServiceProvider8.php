@@ -23,8 +23,8 @@ class SmsServiceProvider8 extends ServiceProvider
 	{
         //php artisan vendor:publish --provider=Leenset\Sms\SmsServiceProvider --tag=config
         $this->publishes([
-            __DIR__ . './config/sms.php' => config_path('sms.php'),
-        ]);
+            __DIR__ . '/config/sms.php' => config_path('sms.php'),
+        ], 'config');
 	}
 
 	/**
