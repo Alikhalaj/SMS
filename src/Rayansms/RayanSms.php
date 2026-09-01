@@ -1,6 +1,6 @@
 <?php
 
-namespace Leenset\Sms\Rayansms;
+namespace Alikh\Sms\Rayansms;
 
 use Illuminate\Support\Facades\Http;
 

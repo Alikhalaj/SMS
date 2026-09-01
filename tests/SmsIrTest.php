@@ -1,8 +1,8 @@
 <?php
 
-namespace Leenset\Sms\Tests;
+namespace Alikh\Sms\Tests;
 
-use Leenset\Sms\Smsir\SmsIr;
+use Alikh\Sms\Smsir\SmsIr;
 use PHPUnit\Framework\TestCase;
 use Mockery;
 use Illuminate\Support\Facades\Http;

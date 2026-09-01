@@ -2,7 +2,7 @@
     "name": "alikhalaj/sms",
     "description": "Package for SMS system with support for multiple gateways (SMS.ir, Kavenegar, RayanSms)",
     "type": "library",
-    "version": "1.1.0",
+    "version": "2.0.0",
     "license": "MIT",
     "keywords": [
         "sms",
@@ -15,17 +15,17 @@
     ],
     "autoload": {
         "psr-4": {
-            "Leenset\\Sms\\": "src/",
-            "Leenset\\Sms\\Tests\\": "tests/"
+            "Alikh\\Sms\\": "src/",
+            "Alikh\\Sms\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Leenset\\Sms\\SmsServiceProvider8"
+                "Alikh\\Sms\\SmsServiceProvider8"
             ],
             "aliases": {
-                "Sms": "Leenset\\Sms\\Sms"
+                "Sms": "Alikh\\Sms\\Sms"
             }
         }
     },

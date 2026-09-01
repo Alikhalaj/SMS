@@ -1,11 +1,11 @@
 <?php
 
-namespace Leenset\Sms;
+namespace Alikh\Sms;
 
-use Leenset\Sms\Smsir\SmsIr;
-use Leenset\Sms\Rayansms\RayanSms;
-use Leenset\Sms\Kavenegar\Kavenegar;
-use Leenset\Sms\Exceptions\PortNotFoundException;
+use Alikh\Sms\Smsir\SmsIr;
+use Alikh\Sms\Rayansms\RayanSms;
+use Alikh\Sms\Kavenegar\Kavenegar;
+use Alikh\Sms\Exceptions\PortNotFoundException;
 
 class SmsResolver
 {

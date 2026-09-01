@@ -1,8 +1,8 @@
 <?php
 
-namespace Leenset\Sms\Tests;
+namespace Alikh\Sms\Tests;
 
-use Leenset\Sms\Kavenegar\Kavenegar;
+use Alikh\Sms\Kavenegar\Kavenegar;
 use Orchestra\Testbench\TestCase;
 use Mockery;
 use Illuminate\Support\Facades\Http;

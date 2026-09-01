@@ -13,7 +13,7 @@ composer require alikhalaj/sms
 پس از نصب، فایل کانفیگ را publish کنید:
 
 ```bash
-php artisan vendor:publish --provider="Leenset\Sms\SmsServiceProvider8" --tag="config"
+php artisan vendor:publish --provider="Alikh\Sms\SmsServiceProvider8" --tag="config"
 ```
 
 سپس در فایل `.env` خود تنظیمات زیر را اضافه کنید:
@@ -44,7 +44,7 @@ RAYANSMS_API_URL=https://rayansms.com/api/
 ### استفاده از Facade
 
 ```php
-use Leenset\Sms\Sms;
+use Alikh\Sms\Sms;
 
 // ارسال پیامک ساده
 Sms::send('متن پیامک', '09123456789');
@@ -59,7 +59,7 @@ Sms::verificationCode('123456', '09123456789');
 ### استفاده مستقیم از Resolver
 
 ```php
-use Leenset\Sms\SmsResolver;
+use Alikh\Sms\SmsResolver;
 
 $sms = new SmsResolver();
 $sms->make('kavenegar')->send('متن پیامک', '09123456789');

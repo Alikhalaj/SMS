@@ -1,6 +1,6 @@
 <?php
 
-namespace Leenset\Sms;
+namespace Alikh\Sms;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
@@ -35,7 +35,7 @@ class SmsServiceProvider extends ServiceProvider
     }
     private function getProvider()
     {
-        $provider = 'Leenset\Sms\SmsServiceProvider8';
+        $provider = 'Alikh\Sms\SmsServiceProvider8';
 
         return new $provider($this->app);
     }

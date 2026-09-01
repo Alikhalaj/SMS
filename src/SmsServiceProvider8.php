@@ -1,6 +1,6 @@
 <?php
 
-namespace Leenset\Sms;
+namespace Alikh\Sms;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
@@ -21,7 +21,7 @@ class SmsServiceProvider8 extends ServiceProvider
 	 */
 	public function boot()
 	{
-        //php artisan vendor:publish --provider=Leenset\Sms\SmsServiceProvider --tag=config
+        //php artisan vendor:publish --provider=Alikh\Sms\SmsServiceProvider --tag=config
         $this->publishes([
             __DIR__ . '/config/sms.php' => config_path('sms.php'),
         ], 'config');

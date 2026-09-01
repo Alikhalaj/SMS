@@ -1,6 +1,6 @@
 <?php
 
-namespace Leenset\Sms\Exceptions;
+namespace Alikh\Sms\Exceptions;
 /**
  * This exception when throws, user try to submit a payment request who submitted before
  */

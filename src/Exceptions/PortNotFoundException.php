@@ -1,6 +1,6 @@
 <?php
 
-namespace Leenset\Sms\Exceptions;
+namespace Alikh\Sms\Exceptions;
 
 class PortNotFoundException extends GatewayException {
 

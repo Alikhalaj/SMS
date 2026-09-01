@@ -1,6 +1,6 @@
 <?php
 
-namespace Leenset\Sms\Smsir;
+namespace Alikh\Sms\Smsir;
 
 use Illuminate\Support\Facades\Http;
 

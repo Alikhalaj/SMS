@@ -1,6 +1,6 @@
 <?php
 
-namespace Leenset\Sms\Tests;
+namespace Alikh\Sms\Tests;
 
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
@@ -9,14 +9,14 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Leenset\Sms\SmsServiceProvider8::class,
+            \Alikh\Sms\SmsServiceProvider8::class,
         ];
     }
 
     protected function getPackageAliases($app)
     {
         return [
-            'Sms' => \Leenset\Sms\Sms::class,
+            'Sms' => \Alikh\Sms\Sms::class,
         ];
     }
 

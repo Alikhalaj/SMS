@@ -1,6 +1,6 @@
 <?php
 
-namespace Leenset\Sms;
+namespace Alikh\Sms;
 
 use Illuminate\Support\Facades\Facade;
 

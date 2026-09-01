@@ -1,9 +1,9 @@
 <?php
 
-namespace Leenset\Sms\Tests;
+namespace Alikh\Sms\Tests;
 
-use Leenset\Sms\SmsResolver;
-use Leenset\Sms\Exceptions\PortNotFoundException;
+use Alikh\Sms\SmsResolver;
+use Alikh\Sms\Exceptions\PortNotFoundException;
 use Orchestra\Testbench\TestCase;
 use Mockery;
 
